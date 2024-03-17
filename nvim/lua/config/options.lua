@@ -53,7 +53,7 @@ opt.scrolloff = 0 -- Controls the minimum number of screen lines to keep above a
 opt.sidescrolloff = 8 -- Controls the minimum number of columns to keep to the left and right of the cursor when scrolling horizontally
 opt.title = true -- Shows the title in the Terminal Tab ( look up )
 opt.titlelen = 0 -- Do NOT shorten the Title length
-opt.guifont = "JetBrainsMono NFM Regular" -- Sets the font for ther GUI version of Neovim
+opt.guifont = "JetBrainsMono Nerd Font" -- Sets the font for ther GUI version of Neovim
 opt.shortmess:append("I") -- Disables Intro / Start Message
 -- opt.shortmess:append("c") -- Enables Intro / Start Message
 

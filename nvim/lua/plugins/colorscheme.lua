@@ -40,9 +40,10 @@ return {
     priority = 1000,
     config = function()
       require("onedark").setup({
-        transparent = true,
+        style = "dark",
+        transparent = true, -- Turn off if you want OneDark Theme to take the wheel instead of Windows terminal's background colour
         lualine = {
-          transparent = true,
+          transparent = true, -- Turn off if you want OneDark Theme to take the wheel instead of Windows terminal's background colour
         },
         require("notify").setup({
           background_colour = "#000000",
@@ -58,7 +59,17 @@ return {
     config = function()
       require("gruvbox").setup({
         transparent = true,
+        strikethrough = true,
+        contrast = "soft",
         undercurl = true,
+        bold = true,
+        italic = {
+          strings = true,
+          emphasis = true,
+          comments = true,
+          operators = false,
+          folds = true,
+        },
         lualine = {
           transparent = true,
         },
