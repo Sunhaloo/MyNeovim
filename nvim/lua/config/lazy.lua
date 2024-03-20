@@ -12,7 +12,7 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        colorscheme = "gruvbox",
+        colorscheme = "github_dark_default",
       },
     },
     -- add LazyVim and import its plugins
