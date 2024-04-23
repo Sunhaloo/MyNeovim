@@ -6,8 +6,8 @@ local opts = { noremap = true, silent = false }
 
 -- Leader Key
 keymap.set("n", "<Space>", "", opts)
-vim.gmapleader = " "
-vim.g.maplocalleader = " "
+-- vim.gmapleader = " "
+-- vim.g.maplocalleader = " "
 
 -- <C-i> is not <C-i>, need to make it become <C-i>
 keymap.set("n", "<C-i>", "<C-i>", opts)
@@ -87,3 +87,9 @@ keymap.set("v", "p", '"_dP', opts)
 -- Stay in Indent Mode
 keymap.set("v", "<", "<gv", opts)
 keymap.set("v", ">", ">gv", opts)
+
+-- Telescope
+keymap.set("n", "<leader>ff", ":Telescope find_files<cr>")
+keymap.set("n", "<leader>fg", ":Telescope git_files<cr>")
+keymap.set("n", "<leader>fl", ":Telescope live_grep<cr>")
+keymap.set("n", "<leader>fo", ":Telescope oldfiles<cr>")
