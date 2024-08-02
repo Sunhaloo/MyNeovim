@@ -14,6 +14,10 @@ keymap.set("n", "<C-i>", "<C-i>", opts)
 
 -- NORMAL Mode
 
+-- Copy to Clipboard
+keymap.set({"n", "v"}, "<leader>y", [["+y]])
+
+
 -- Increment / Decrement Numbers
 keymap.set("n", "+", "<C-a>")
 keymap.set("n", "-", "<C-x>")
