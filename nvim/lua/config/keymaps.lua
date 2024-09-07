@@ -1,99 +1,120 @@
 -- Keymap File Written in Lua
 
--- Variables
+-- variables
+-- no need to type prefix `vim.keymap` before every keymap
 local keymap = vim.keymap
-local opts = { noremap = true, silent = false }
+-- `noremap` prevents keymaps from being overwritten
+-- `silent` tells Neovim to display the command or not to display the command
+	-- if set to `true` will silent the commands
+	-- if set to `false` will not silent the commands
+local opts = { noremap = true, silent = true }
 
--- Leader Key
-keymap.set("n", "<Space>", "", opts)
--- vim.gmapleader = " "
--- vim.g.maplocalleader = " "
+-- leader keys ---> set to `<Space>`
+-- overall / global leader key takes control over "most" files
+vim.g.mapleader = ' '
+-- local leader key depends on specific buffers and filetypes
+-- can be used to overide 'vim.g.mapleader` / global leader key
+vim.g.maplocalleader = ' '
 
--- <C-i> is not <C-i>, need to make it become <C-i>
+-- <C-i> is not <C-i> by default, need to make it become <C-i>
 keymap.set("n", "<C-i>", "<C-i>", opts)
 
 -- NORMAL Mode
 
--- Copy to Clipboard
-keymap.set({"n", "v"}, "<leader>y", [["+y]])
+-- copy to system clipboard
+keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = "Copy TO System Clipboard" })
+-- paste from system clipboard
+keymap.set({"n", "v"}, "<leader>p", [["+p]], { desc = "Copy FROM System Clipboard" })
 
+-- increment / decrement numbers
 
--- Increment / Decrement Numbers
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
+-- increment using '+' character
+keymap.set("n", "+", "<C-a>", { desc = "Increment Number by 1"})
+-- decrement using '-' character
+keymap.set("n", "-", "<C-x>", { desc = "Decrement Number by 1"})
 
--- Delete A Word Backwards
+-- delete a word backwards
 keymap.set("n", "dw", "vb_d")
 
--- Select All
-keymap.set("n", "<C-a>", "gg<S-v>G")
+-- select all
+keymap.set("n", "<C-a>", "gg<S-v>G", { desc = "Select All"})
 
--- Removing the annoying paste buffer / register thing
-keymap.set("x", "p", [["_dP]])
+-- open lex
+keymap.set("n", "lx", "<cmd>Lex<Return>", { desc = "Lex" })
 
--- Jumplist
-keymap.set("n", "<C-m>", "<C-i>", opts)
+-- tabs
 
--- Open Lex
-keymap.set("n", "lx", ":Lex<Return>", opts)
+-- new tab with `te`
+keymap.set("n", "te", "<cmd>tabedit<CR>", { desc = "Open New Tab" })
+-- switch to next tab with `<Tab>`
+keymap.set("n", "<tab>", "<cmd>tabnext<Return>", opts)
+-- switch to previous tab with `Shift+<Tab>`
+keymap.set("n", "<s-tab>", "<cmd>tabprev<Return>", opts)
+-- save and close tab with <leader>X
+keymap.set("n", "<leader>X", ":w | tabclose<CR>", { desc = "Save and Close Tab" })
 
--- TABS
-
--- New Tab
-keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
-
--- Split Window ( Neovim )
+-- split window ( neovim )
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
 
--- Move Window ( From Neovim to Neovim )
+-- move window ( from neovim to neovim )
+-- NOTE: currently using the vim-tmux-navigator plugin ==> makes it so much easier
 keymap.set("n", "sh", "<C-w>h")
 keymap.set("n", "sk", "<C-w>k")
 keymap.set("n", "sj", "<C-w>j")
 keymap.set("n", "sl", "<C-w>l")
 
--- Resize Windows
+-- resize windows
 keymap.set("n", "<C-w><left>", "<C-w><")
 keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
--- Diagnostic
-keymap.set("n", "<C-j>", function()
-  vim.diagnostic.goto_next()
-end)
+-- insert mode
 
--- INSERT Mode
-
--- Go to NORMAL Mode From INSERT Mode
+-- go to normal mode from insert mode
 keymap.set("i", "jk", "<ESC>", opts)
 
--- Navigation Within INSERT Mode
+-- navigation within insert mode ( I am weird )
 keymap.set("i", "<C-h>", "<Left>", opts)
 keymap.set("i", "<C-l>", "<Right>", opts)
 keymap.set("i", "<C-j>", "<Down>", opts)
 keymap.set("i", "<C-k>", "<Up>", opts)
 
--- VISUAL Mode
+-- visual mode
 
--- Go to NORMAL Mode From VISUAL Mode
+-- paste over currently selected text without yanking it
+keymap.set("v", "p", [["_dp]])
+keymap.set("v", "p", [["_dP]])
+
+-- go to normal mode from visual mode
 keymap.set("v", "jk", "<ESC>", opts)
 
--- Move Lines Of Text
+-- move lines of text ( up / down ) with visual mode
 keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
 
--- Paste even when in VISUAL Mode
+-- paste even when in visual mode
 keymap.set("v", "p", '"_dP', opts)
 
--- Stay in Indent Mode
+-- stay in indent mode when tabbing / untabbing line or block of text or characters
 keymap.set("v", "<", "<gv", opts)
 keymap.set("v", ">", ">gv", opts)
 
--- Telescope
-keymap.set("n", "<leader>ff", ":Telescope find_files<cr>")
-keymap.set("n", "<leader>fg", ":Telescope git_files<cr>")
-keymap.set("n", "<leader>fl", ":Telescope live_grep<cr>")
-keymap.set("n", "<leader>fo", ":Telescope oldfiles<cr>")
+-- lazy plugin manager
+keymap.set("n", "<leader>L", ":Lazy<CR>", { desc = "Lazy Plugin Manager" })
+
+-- neotree file browser
+keymap.set("n", "<leader>e", ":Neotree toggle left<CR>", { desc = "File Explorer ( Left )" })
+keymap.set("n", "<leader>E", ":Neotree toggle float<CR>", { desc = "File Explorer ( Float )" })
+
+-- telescope
+keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Telescope Find Files"})
+keymap.set("n", "<leader>fg", "<cmd>Telescope git_files<CR>", { desc = "Telescope Find Git Files"})
+keymap.set("n", "<leader>fl", "<cmd>Telescope live_grep<CR>", { desc = "Telescope Live Grep"})
+keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Telescope Buffer"})
+keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "Telescope Old Files"})
+keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Find ToDo Comments"})
+
+-- toggle zenmode
+keymap.set("n", "<leader>Z", ":ZenMode<CR>", { desc = "Zen Mode" })
